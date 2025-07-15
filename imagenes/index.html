@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)file:///C:/Users/HP/Desktop/index.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERFUMERIA "MODAS MILY BLOOM" - Tienda Online</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #6a0dad;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #4b0082;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            background-color: #ddd;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab-btn.active {
+            background-color: #6a0dad;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .productos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .producto {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .producto:hover {
+            transform: scale(1.05);
+        }
+        .producto img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .etiqueta-oferta {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .precio {
+            font-weight: bold;
+            color: #6a0dad;
+            font-size: 1.2em;
+        }
+        .precio-tachado {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9em;
+        }
+        .cantidad {
+            margin: 10px 0;
+        }
+        .cantidad input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button.agregar-carrito {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button.agregar-carrito:hover {
+            background-color: #4b0082;
+        }
+        #carrito {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #lista-carrito {
+            list-style: none;
+            padding: 0;
+        }
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        #lista-carrito li:last-child {
+            border-bottom: none;
+        }
+        #total {
+            font-weight: bold;
+            font-size: 1.3em;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .eliminar-item {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .eliminar-item:hover {
+            background-color: #cc0000;
+        }
+        .cupon-descuento {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0e6ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .cupon-descuento input {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .cupon-descuento button {
+            padding: 8px 15px;
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .mensaje-cupon {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .mensaje-cupon.valido {
+            color: #009900;
+        }
+        .mensaje-cupon.invalido {
+            color: #ff0000;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-contenido {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-contenido h2 {
+            color: #6a0dad;
+        }
+        .opciones-pago {
+            margin: 20px 0;
+        }
+        .opcion-pago {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .opcion-pago:hover {
+            background: #f0e6ff;
+        }
+        .opcion-pago.activa {
+            border: 2px solid #6a0dad;
+            background: #f0e6ff;
+        }
+        #qr-pago {
+            max-width: 200px;
+            margin: 15px auto;
+            display: block;
+        }
+        .botones-modal {
+            margin-top: 20px;
+        }
+        .botones-modal button {
+            margin: 0 10px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        /* Botón de WhatsApp flotante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        /* Generador de QR local */
+        .qr-code {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            padding: 10px;
+        }
+        .oferta-especial {
+            background-color: #ffeb3b;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+    <!-- Librería para generar QR -->
+    <script src="./PERFUMERIA _MODAS MILY BLOOM_ - Tienda Online_files/qrcode.min.js.descargar"></script>
+</head>
+<body>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/59162776863" class="whatsapp-float" target="_blank">
+        <i style="font-style: normal">📱</i>
+    </a>
+
+    <header>
+        <h1>PERFUMERÍA "MODAS MILY BLOOM"</h1>
+        <p>Las mejores fragancias para ti</p>
+    </header>
+    <nav>
+        <a href="file:///C:/Users/HP/Desktop/index.html#inicio">Inicio</a>
+        <a href="file:///C:/Users/HP/Desktop/index.html#hombre">Perfumes Hombre</a>
+        <a href="file:///C:/Users/HP/Desktop/index.html#mujer">Perfumes Mujer</a>
+        <a href="file:///C:/Users/HP/Desktop/index.html#carrito">Carrito (<span id="contador-carrito">2</span>)</a>
+    </nav>
+    <div class="container">
+        <section id="inicio">
+            <h2>Bienvenido a nuestra perfumería</h2>
+            <p>Descubre las fragancias más exclusivas para hombre y mujer.</p>
+            <div class="oferta-especial">
+                ¡OFERTA ESPECIAL! 2 perfumes = Bs. 30 de descuento | 5 perfumes = 6to GRATIS
+            </div>
+        </section>
+        
+        <!-- Pestañas de Hombres y Mujeres -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="hombre">Hombres</button>
+            <button class="tab-btn" data-tab="mujer">Mujeres</button>
+        </div>
+        
+        <!-- Perfumes para Hombres (9) -->
+        <div id="hombre" class="tab-content active">
+            <div class="productos">
+                <div class="producto" data-id="1" data-nombre="EMPIRE ABSOLUT" data-precio="300">
+                    <img src="file:///D:/Users/HP/Desktop/imagenes/empire-absolut.jpg" alt="EMPIRE ABSOLUT">
+                    <h3>EMPIRE ABSOLUT</h3>
+                    <p>Fragancia intensa para hombres.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="2" data-nombre="EMPIRE GOLD" data-precio="300">
+                    <img src="file:///D:/Users/HP/Desktop/imagenes/empire-gold.jpg" alt="EMPIRE GOLD">
+                    <h3>EMPIRE GOLD</h3>
+                    <p>Elegancia y sofisticación.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="3" data-nombre="EMPIRE SPORT" data-precio="300">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/empire-sport.jpg" alt="EMPIRE SPORT">
+                    <h3>EMPIRE SPORT</h3>
+                    <p>Para el hombre activo.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="4" data-nombre="FEELIN SEXY" data-precio="310">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/feelin-sexy.jpg" alt="FEELIN SEXY">
+                    <h3>FEELIN SEXY</h3>
+                    <p>Energía vibrante.</p>
+                    <p class="precio">Bs. 310</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="5" data-nombre="INEBRIANTE DE VARÓN" data-precio="380">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/inebriante-varon.jpg" alt="INEBRIANTE DE VARÓN">
+                    <h3>INEBRIANTE DE VARÓN</h3>
+                    <p>Audaz y seductor.</p>
+                    <p class="precio">Bs. 380</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="6" data-nombre="LATITUDE EXPEDITION" data-precio="290">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/latitude-expedition.jpg" alt="LATITUDE EXPEDITION">
+                    <h3>LATITUDE EXPEDITION</h3>
+                    <p>Aventura en cada gota.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="7" data-nombre="LATITUDE EXTREME" data-precio="290">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/latitude-extreme.jpg" alt="LATITUDE EXTREME">
+                    <h3>LATITUDE EXTREME</h3>
+                    <p>Intensidad extrema.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="8" data-nombre="LATITUDE ORIGINI" data-precio="290">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/latitude-origini.jpg" alt="LATITUDE ORIGINI">
+                    <h3>LATITUDE ORIGINI</h3>
+                    <p>Esencia pura.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="9" data-nombre="LATITUDE STAMINA" data-precio="290">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/latitude-stamina.jpg" alt="LATITUDE STAMINA">
+                    <h3>LATITUDE STAMINA</h3>
+                    <p>Duración prolongada.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Perfumes para Mujeres (4) -->
+        <div id="mujer" class="tab-content">
+            <div class="productos">
+                <div class="producto" data-id="10" data-nombre="EMPIRE WOMAN" data-precio="300">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/empire-woman.jpg" alt="EMPIRE WOMAN">
+                    <h3>EMPIRE WOMAN</h3>
+                    <p>Elegancia femenina.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="11" data-nombre="GRACE LA ROSE" data-precio="290">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/grace-la-rose.jpg" alt="GRACE LA ROSE">
+                    <h3>GRACE LA ROSE</h3>
+                    <p>Frescura floral.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="12" data-nombre="GRACE MIG" data-precio="300">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/grace-mig.jpg" alt="GRACE MIG">
+                    <h3>GRACE MIG</h3>
+                    <p>Dulce y sensual.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="13" data-nombre="INEBRIANTE MUJER" data-precio="380">
+                    <img src="file:///C:/Users/HP/Desktop/imagenes/inebriante-mujer.jpg" alt="INEBRIANTE MUJER">
+                    <h3>INEBRIANTE MUJER</h3>
+                    <p>Seducción intensa.</p>
+                    <p class="precio">Bs. 380</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carrito de compras -->
+        <section id="carrito">
+            <h2>Tu Carrito de Compras</h2>
+            <div id="contenido-carrito">
+                <ul id="lista-carrito"><li>
+                    <span>EMPIRE ABSOLUT x2</span>
+                    <span>Bs. 600.00</span>
+                    <button class="eliminar-item" data-id="1">Eliminar</button>
+                </li></ul>
+                
+                <!-- Cupón de descuento -->
+                <div class="cupon-descuento">
+                    <h3>¿Tienes un cupón de descuento?</h3>
+                    <input type="text" id="input-cupon" placeholder="Ingresa tu cupón">
+                    <button id="aplicar-cupon">Aplicar</button>
+                    <p id="mensaje-cupon" class="mensaje-cupon"></p>
+                </div>
+                
+                <p id="subtotal">Subtotal: Bs. <span>600.00</span></p>
+                <p id="descuento-cantidad">Descuento por cantidad: Bs. <span>30.00</span></p>
+                <p id="descuento-cupon">Descuento por cupón: Bs. <span>0.00</span></p>
+                <p id="total">Total: Bs. <span>570.00</span></p>
+                <p id="oferta-regalo" class="oferta-especial" style="display: none;">¡Felicidades! Tienes un perfume de regalo</p>
+                <button id="vaciar-carrito">Vaciar Carrito</button>
+                <button id="comprar" style="background-color: #009900;">Finalizar Compra</button>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modal de pago -->
+    <div id="modal-pago" class="modal" style="display: none;">
+        <div class="modal-contenido">
+            <h2>Finalizar Compra</h2>
+            <p>Total a pagar: <strong id="total-modal">Bs. 570.00</strong></p>
+            
+            <div class="opciones-pago">
+                <div class="opcion-pago activa" data-metodo="efectivo">
+                    <h3>💵 Pago en Efectivo</h3>
+                    <p>Paga cuando recibas tu pedido.</p>
+                </div>
+                <div class="opcion-pago" data-metodo="qr">
+                    <h3>📱 Pago con QR</h3>
+                    <p>Escanea el código con tu app bancaria.</p>
+                    <div id="qr-code-container" class="qr-code" title="https://tuweb.com/pagar?total=570"><canvas width="200" height="200" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                </div>
+            </div>
+            
+            <div class="botones-modal">
+                <button id="cancelar-pago">Cancelar</button>
+                <button id="confirmar-pago" style="background-color: #009900;">Confirmar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 PERFUMERÍA "MODAS MILY BLOOM". Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Variables
+        let carrito = [];
+        let descuentoCupon = 0;
+        let descuentoCantidad = 0;
+        let tieneRegalo = false;
+        const cuponesValidos = {
+            "DESCUENTO10": 10,
+            "VERANO20": 20,
+            "OFERTA50": 50
+        };
+        const numeroWhatsApp = "59162776863"; // Tu número sin "+"
+        let qrCode = null;
+
+        // Elementos del DOM
+        const contadorCarrito = document.getElementById('contador-carrito');
+        const listaCarrito = document.getElementById('lista-carrito');
+        const subtotalElement = document.getElementById('subtotal').querySelector('span');
+        const descuentoCantidadElement = document.getElementById('descuento-cantidad').querySelector('span');
+        const descuentoCuponElement = document.getElementById('descuento-cupon').querySelector('span');
+        const totalElement = document.getElementById('total').querySelector('span');
+        const ofertaRegaloElement = document.getElementById('oferta-regalo');
+        const btnVaciar = document.getElementById('vaciar-carrito');
+        const btnComprar = document.getElementById('comprar');
+        const inputCupon = document.getElementById('input-cupon');
+        const btnAplicarCupon = document.getElementById('aplicar-cupon');
+        const mensajeCupon = document.getElementById('mensaje-cupon');
+        const modalPago = document.getElementById('modal-pago');
+        const totalModal = document.getElementById('total-modal');
+        const opcionesPago = document.querySelectorAll('.opcion-pago');
+        const btnCancelarPago = document.getElementById('cancelar-pago');
+        const btnConfirmarPago = document.getElementById('confirmar-pago');
+        const qrContainer = document.getElementById('qr-code-container');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        let metodoSeleccionado = null;
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarCarrito();
+            actualizarCarrito();
+        });
+
+        // Tabs
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Carrito
+        document.querySelectorAll('.agregar-carrito').forEach(boton => {
+            boton.addEventListener('click', agregarAlCarrito);
+        });
+
+        btnVaciar.addEventListener('click', vaciarCarrito);
+        btnComprar.addEventListener('click', () => {
+            if (carrito.length === 0) {
+                alert('¡Tu carrito está vacío! Agrega productos antes de comprar.');
+                return;
+            }
+            const total = parseFloat(totalElement.textContent);
+            totalModal.textContent = `Bs. ${total.toFixed(2)}`;
+            
+            // Generar QR localmente
+            if (qrCode) {
+                qrCode.clear();
+                qrCode.makeCode(`https://tuweb.com/pagar?total=${total}`);
+            } else {
+                qrCode = new QRCode(qrContainer, {
+                    text: `https://tuweb.com/pagar?total=${total}`,
+                    width: 200,
+                    height: 200
+                });
+            }
+            
+            modalPago.style.display = 'flex';
+        });
+
+        btnCancelarPago.addEventListener('click', () => {
+            modalPago.style.display = 'none';
+        });
+
+        opcionesPago.forEach(opcion => {
+            opcion.addEventListener('click', () => {
+                opcionesPago.forEach(o => o.classList.remove('activa'));
+                opcion.classList.add('activa');
+                metodoSeleccionado = opcion.dataset.metodo;
+            });
+        });
+
+        btnConfirmarPago.addEventListener('click', () => {
+            if (!metodoSeleccionado) {
+                alert('Selecciona un método de pago.');
+                return;
+            }
+            enviarWhatsApp();
+            modalPago.style.display = 'none';
+            vaciarCarrito();
+        });
+
+        modalPago.addEventListener('click', (e) => {
+            if (e.target === modalPago) {
+                modalPago.style.display = 'none';
+            }
+        });
+
+        btnAplicarCupon.addEventListener('click', aplicarCupon);
+
+        // Funciones
+        function agregarAlCarrito(e) {
+            const boton = e.target;
+            const producto = boton.closest('.producto');
+            const id = producto.dataset.id;
+            const nombre = producto.dataset.nombre;
+            const precio = parseFloat(producto.dataset.precio);
+            const cantidad = parseInt(producto.querySelector('.input-cantidad').value);
+
+            const productoExistente = carrito.find(item => item.id === id);
+
+            if (productoExistente) {
+                productoExistente.cantidad += cantidad; // Suma las cantidades
+            } else {
+                carrito.push({ id, nombre, precio, cantidad });
+            }
+
+            guardarCarrito();
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            guardarCarrito();
+            actualizarCarrito();
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            descuentoCupon = 0;
+            descuentoCantidad = 0;
+            tieneRegalo = false;
+            guardarCarrito();
+            actualizarCarrito();
+            mensajeCupon.textContent = '';
+            mensajeCupon.className = 'mensaje-cupon';
+            inputCupon.value = '';
+        }
+
+        function aplicarCupon() {
+            const codigo = inputCupon.value.trim().toUpperCase();
+            
+            if (cuponesValidos[codigo]) {
+                descuentoCupon = cuponesValidos[codigo];
+                mensajeCupon.textContent = `Cupón aplicado: ${descuentoCupon}% de descuento`;
+                mensajeCupon.className = 'mensaje-cupon valido';
+                actualizarCarrito();
+            } else {
+                descuentoCupon = 0;
+                mensajeCupon.textContent = 'Cupón inválido';
+                mensajeCupon.className = 'mensaje-cupon invalido';
+                actualizarCarrito();
+            }
+        }
+
+        function calcularDescuentos(totalItems) {
+            // Reiniciar descuentos
+            descuentoCantidad = 0;
+            tieneRegalo = false;
+
+            // Descuento por 2 perfumes
+            if (totalItems >= 2) {
+                descuentoCantidad = 30;
+            }
+
+            // 6to perfume gratis si compra 5
+            if (totalItems >= 5) {
+                descuentoCantidad = 0; // Anulamos el descuento de 30 si aplica el de 6to gratis
+                tieneRegalo = true;
+            }
+        }
+
+        function actualizarCarrito() {
+            listaCarrito.innerHTML = '';
+            let subtotal = 0;
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+            // Calcular descuentos basados en cantidad
+            calcularDescuentos(totalItems);
+
+            carrito.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.nombre} x${item.cantidad}</span>
+                    <span>Bs. ${(item.precio * item.cantidad).toFixed(2)}</span>
+                    <button class="eliminar-item" data-id="${item.id}">Eliminar</button>
+                `;
+                listaCarrito.appendChild(li);
+                subtotal += item.precio * item.cantidad;
+            });
+
+            // Mostrar/ocultar oferta de regalo
+            if (tieneRegalo) {
+                ofertaRegaloElement.style.display = 'block';
+                // Agregar el perfume de regalo (el más barato)
+                const precios = carrito.map(item => item.precio);
+                const precioMinimo = Math.min(...precios);
+                const productoRegalo = carrito.find(item => item.precio === precioMinimo);
+                
+                if (productoRegalo) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${productoRegalo.nombre} x1 (REGALO)</span>
+                        <span>Bs. 0.00</span>
+                    `;
+                    listaCarrito.appendChild(li);
+                }
+            } else {
+                ofertaRegaloElement.style.display = 'none';
+            }
+
+            subtotalElement.textContent = subtotal.toFixed(2);
+            
+            // Calcular descuentos
+            const valorDescuentoCupon = (subtotal * descuentoCupon) / 100;
+            descuentoCuponElement.textContent = valorDescuentoCupon.toFixed(2);
+            descuentoCantidadElement.textContent = descuentoCantidad.toFixed(2);
+            
+            const total = subtotal - valorDescuentoCupon - descuentoCantidad;
+            totalElement.textContent = total.toFixed(2);
+            
+            contadorCarrito.textContent = totalItems;
+
+            document.querySelectorAll('.eliminar-item').forEach(boton => {
+                boton.addEventListener('click', (e) => {
+                    eliminarDelCarrito(e.target.dataset.id);
+                });
+            });
+        }
+
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
+        function cargarCarrito() {
+            const carritoGuardado = localStorage.getItem('carrito');
+            if (carritoGuardado) {
+                carrito = JSON.parse(carritoGuardado);
+            }
+        }
+
+        function enviarWhatsApp() {
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            const mensaje = `🚀 *NUEVO PEDIDO - MODAS MILY BLOOM* 🚀\n\n📋 *Productos:*\n${
+                carrito.map(item => `➡ ${item.nombre} x${item.cantidad}: Bs. ${(item.precio * item.cantidad).toFixed(2)}`).join('\n')
+            }${tieneRegalo ? '\n➡ 1 PERFUME DE REGALO (6to por comprar 5)' : ''}\n\n💰 *Subtotal:* Bs. ${subtotalElement.textContent}\n🎁 *Descuento por cantidad:* Bs. ${descuentoCantidadElement.textContent}\n🎁 *Descuento por cupón:* Bs. ${descuentoCuponElement.textContent}\n💵 *Total:* Bs. ${
+                totalElement.textContent
+            }\n\n💳 *Método de pago:* ${
+                metodoSeleccionado === 'efectivo' ? 'Efectivo' : 'QR'
+            }\n\n📦 *Dirección de envío:* \n________________________________\n\n¡Gracias por tu compra! 🎉`;
+            
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+
+</body></html>

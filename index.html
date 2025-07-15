@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODAS ALEJANDRA BLOOM - Tienda Online</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .portada {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: auto;
+            z-index: 10;
+        }
+        header {
+            background-color: #6a0dad;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        nav {
+            background-color: #4b0082;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            background-color: #ddd;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab-btn.active {
+            background-color: #6a0dad;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .productos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .producto {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .producto:hover {
+            transform: scale(1.05);
+        }
+        .producto img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .etiqueta-oferta {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .precio {
+            font-weight: bold;
+            color: #6a0dad;
+            font-size: 1.2em;
+        }
+        .precio-tachado {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9em;
+        }
+        .cantidad {
+            margin: 10px 0;
+        }
+        .cantidad input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button.agregar-carrito {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button.agregar-carrito:hover {
+            background-color: #4b0082;
+        }
+        #carrito {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #lista-carrito {
+            list-style: none;
+            padding: 0;
+        }
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        #lista-carrito li:last-child {
+            border-bottom: none;
+        }
+        #total {
+            font-weight: bold;
+            font-size: 1.3em;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .eliminar-item {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .eliminar-item:hover {
+            background-color: #cc0000;
+        }
+        .mensaje-regalo {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0e6ff;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .mensaje-regalo.oruro-cocha-paz {
+            background-color: #e6ffe6;
+            color: #009900;
+        }
+        .mensaje-regalo.otras-ciudades {
+            background-color: #fff2e6;
+            color: #e67300;
+        }
+        .cantidad {
+            margin: 10px 0;
+        }
+        .cantidad input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button.agregar-carrito {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button.agregar-carrito:hover {
+            background-color: #4b0082;
+        }
+        #carrito {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #lista-carrito {
+            list-style: none;
+            padding: 0;
+        }
+        #lista-carrito li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        #lista-carrito li:last-child {
+            border-bottom: none;
+        }
+        #total {
+            font-weight: bold;
+            font-size: 1.3em;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .eliminar-item {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .eliminar-item:hover {
+            background-color: #cc0000;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-contenido {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal-contenido h2 {
+            color: #6a0dad;
+        }
+        .opciones-pago {
+            margin: 20px 0;
+        }
+        .opcion-pago {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .opcion-pago:hover {
+            background: #f0e6ff;
+        }
+        .opcion-pago.activa {
+            border: 2px solid #6a0dad;
+            background: #f0e6ff;
+        }
+        #qr-pago {
+            max-width: 200px;
+            margin: 15px auto;
+            display: block;
+        }
+        .botones-modal {
+            margin-top: 20px;
+        }
+        .botones-modal button {
+            margin: 0 10px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        /* Botón de WhatsApp flotante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        /* Generador de QR local */
+        .qr-code {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            padding: 10px;
+        }
+        .oferta-especial {
+            background-color: #ffeb3b;
+            padding: 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        /* Pestaña de descripción */
+        .descripcion-btn {
+            background-color: #6a0dad;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .descripcion-content {
+            display: none;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: left;
+        }
+        /* Formulario de pago */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+    <!-- Librería para generar QR -->
+    <script src="./qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Portada  -->
+    <img src="D:/portada1.jpg" alt="Portada Modas Alejandra Bloom" class="portada">
+   
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/59162776863" class="whatsapp-float" target="_blank">
+        <i style="font-style: normal">📱</i>
+    </a>
+
+    <header>
+        <h1>MODAS ALEJANDRA BLOOM</h1>
+        <p>Las mejores fragancias para ti</p>
+    </header>
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#hombre">Perfumes Hombre</a>
+        <a href="#mujer">Perfumes Mujer</a>
+        <a href="#carrito">Carrito (<span id="contador-carrito">0</span>)</a>
+    </nav>
+    <div class="container">
+        <section id="inicio">
+            <h2>Bienvenido a nuestra perfumería</h2>
+            <p>Descubre las fragancias más exclusivas para hombre y mujer.</p>
+            <div class="oferta-especial">
+                ¡OFERTA ESPECIAL! En Oruro, Cochabamba y La Paz: 1 producto sorpresa de regalo por unidad de perfume. 
+                En otras ciudades: Descuento de Bs. 20 por unidad de perfume.
+            </div>
+        </section>
+        
+        <!-- Pestañas de Hombres y Mujeres -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="hombre">Hombres</button>
+            <button class="tab-btn" data-tab="mujer">Mujeres</button>
+        </div>
+        
+        <!-- Perfumes para Hombres (10) -->
+        <div id="hombre" class="tab-content active">
+            <div class="productos">
+                <div class="producto" data-id="1" data-nombre="EMPIRE ABSOLUT" data-precio="300">
+                    <img src="D:/imagenes/empire-absolut.jpg" alt="EMPIRE ABSOLUT">
+                    <h3>EMPIRE ABSOLUT</h3>
+                    <p>Fragancia intensa para hombres.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>EMPIRE ABSOLUT es una fragancia intensa y duradera con notas amaderadas y especiadas, perfecta para el hombre moderno que busca destacar.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="2" data-nombre="EMPIRE GOLD" data-precio="300">
+                    <img src="D:/imagenes/empire-gold.jpg" alt="EMPIRE GOLD">
+                    <h3>EMPIRE GOLD</h3>
+                    <p>Elegancia y sofisticación.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>EMPIRE GOLD combina notas cítricas con un toque amaderado, ideal para el hombre elegante que busca una fragancia versátil para cualquier ocasión.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="3" data-nombre="EMPIRE SPORT" data-precio="300">
+                    <img src="D:/imagenes/empire-sport.jpg" alt="EMPIRE SPORT">
+                    <h3>EMPIRE SPORT</h3>
+                    <p>Para el hombre activo.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>EMPIRE SPORT es una fragancia fresca y energética con notas acuáticas y cítricas, perfecta para el hombre deportista y activo.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="4" data-nombre="FEELIN SEXY" data-precio="310">
+                    <img src="D:/imagenes/feelin-sexy.jpg" alt="FEELIN SEXY">
+                    <h3>FEELIN SEXY</h3>
+                    <p>Energía vibrante.</p>
+                    <p class="precio">Bs. 310</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>FEELIN SEXY es una fragancia seductora con notas cálidas y especiadas que potencian la confianza y el atractivo masculino.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="5" data-nombre="INEBRIANTE DE VARÓN" data-precio="380">
+                    <img src="D:/imagenes/inebriante-varon.jpg" alt="INEBRIANTE DE VARÓN">
+                    <h3>INEBRIANTE DE VARÓN</h3>
+                    <p>Audaz y seductor.</p>
+                    <p class="precio">Bs. 380</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>INEBRIANTE DE VARÓN es una fragancia intensa y cautivadora con notas amaderadas y especiadas, para el hombre que busca dejar una impresión duradera.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="6" data-nombre="LATITUDE EXPEDITION" data-precio="290">
+                    <img src="D:/imagenes/latitude-expedition.jpg" alt="LATITUDE EXPEDITION">
+                    <h3>LATITUDE EXPEDITION</h3>
+                    <p>Aventura en cada gota.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>LATITUDE EXPEDITION captura la esencia de la aventura con notas frescas y amaderadas, ideal para el hombre explorador y audaz.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="7" data-nombre="LATITUDE EXTREME" data-precio="290">
+                    <img src="D:/imagenes/latitude-extreme.jpg" alt="LATITUDE EXTREME">
+                    <h3>LATITUDE EXTREME</h3>
+                    <p>Intensidad extrema.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>LATITUDE EXTREME es una fragancia potente con notas especiadas y amaderadas, para el hombre que no pasa desapercibido.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="8" data-nombre="LATITUDE ORIGINI" data-precio="290">
+                    <img src="D:/imagenes/latitude-origini.jpg" alt="LATITUDE ORIGINI">
+                    <h3>LATITUDE ORIGINI</h3>
+                    <p>Esencia pura.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>LATITUDE ORIGINI ofrece una combinación equilibrada de notas frescas y amaderadas, para el hombre que valora la autenticidad.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="9" data-nombre="LATITUDE STAMINA" data-precio="290">
+                    <img src="D:/imagenes/latitude-stamina.jpg" alt="LATITUDE STAMINA">
+                    <h3>LATITUDE STAMINA</h3>
+                    <p>Duración prolongada.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>LATITUDE STAMINA ofrece una fragancia de larga duración con notas frescas y especiadas, perfecta para todo el día.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="14" data-nombre="EMPIRE ICON" data-precio="380">
+                    <img src="D:/imagenes/empire-icon.jpg" alt="EMPIRE ICON">
+                    <h3>EMPIRE ICON</h3>
+                    <p>Icono de elegancia.</p>
+                    <p class="precio">Bs. 380</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>EMPIRE ICON es una fragancia sofisticada con notas amaderadas y especiadas, creada para el hombre que es un ícono de estilo y elegancia.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Perfumes para Mujeres (4) -->
+        <div id="mujer" class="tab-content">
+            <div class="productos">
+                <div class="producto" data-id="10" data-nombre="EMPIRE WOMAN" data-precio="300">
+                    <img src="D:/imagenes/empire-woman.jpg" alt="EMPIRE WOMAN">
+                    <h3>EMPIRE WOMAN</h3>
+                    <p>Elegancia femenina.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>EMPIRE WOMAN es una fragancia floral y elegante con notas de jazmín y vainilla, perfecta para la mujer sofisticada.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="11" data-nombre="GRACE LA ROSE" data-precio="290">
+                    <img src="D:/imagenes/grace-la-rose.jpg" alt="GRACE LA ROSE">
+                    <h3>GRACE LA ROSE</h3>
+                    <p>Frescura floral.</p>
+                    <p class="precio">Bs. 290</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>GRACE LA ROSE es una fragancia floral fresca con notas de rosas y frutos rojos, ideal para la mujer romántica y femenina.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="12" data-nombre="GRACE MIGNIGHT" data-precio="300">
+                    <img src="D:/imagenes/grace-mignight.jpg" alt="GRACE MIGNIGHT">
+                    <h3>GRACE MIGNIGHT</h3>
+                    <p>Dulce y sensual.</p>
+                    <p class="precio">Bs. 300</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>GRACE MIGNIGHT combina notas dulces de vainilla con un toque sensual de ámbar, perfecta para noches especiales.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+                <div class="producto" data-id="13" data-nombre="INEBRIANTE MUJER" data-precio="380">
+                    <img src="D:/imagenes/inebriante-mujer.jpg" alt="INEBRIANTE MUJER">
+                    <h3>INEBRIANTE MUJER</h3>
+                    <p>Seducción intensa.</p>
+                    <p class="precio">Bs. 380</p>
+                    <div class="cantidad">
+                        <label>Cantidad:</label>
+                        <input type="number" min="1" value="1" class="input-cantidad">
+                    </div>
+                    <button class="descripcion-btn">Descripción</button>
+                    <div class="descripcion-content">
+                        <p>INEBRIANTE MUJER es una fragancia intensamente seductora con notas florales orientales, para la mujer segura de sí misma.</p>
+                    </div>
+                    <button class="agregar-carrito">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carrito de compras -->
+        <section id="carrito">
+            <h2>Tu Carrito de Compras</h2>
+            <div id="contenido-carrito">
+                <ul id="lista-carrito"></ul>
+                
+                <!-- Mensaje de regalo o descuento según ciudad -->
+                <div id="mensaje-regalo" class="mensaje-regalo" style="display: none;"></div>
+                
+                <p id="subtotal">Subtotal: Bs. <span>0.00</span></p>
+                <p id="descuento-ciudad">Descuento por ciudad: Bs. <span>0.00</span></p>
+                <p id="total">Total: Bs. <span>0.00</span></p>
+                <p id="oferta-regalo" class="oferta-especial" style="display: none;"></p>
+                <button id="vaciar-carrito">Vaciar Carrito</button>
+                <button id="comprar" style="background-color: #009900;">Finalizar Compra</button>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modal de pago -->
+    <div id="modal-pago" class="modal" style="display: none;">
+        <div class="modal-contenido">
+            <h2>Finalizar Compra</h2>
+            <p>Total a pagar: <strong id="total-modal">Bs. 0.00</strong></p>
+            
+            <div class="opciones-pago">
+                <div class="opcion-pago activa" data-metodo="efectivo">
+                    <h3>💵 Pago en Efectivo</h3>
+                    <p>Paga cuando recibas tu pedido.</p>
+                </div>
+                <div class="opcion-pago" data-metodo="qr">
+                    <h3>📱 Pago con QR</h3>
+                    <p>Escanea el código con tu app bancaria.</p>
+                    <img id="qr-pago" src="D:/imagenes/qr-real.jpg" alt="Código QR para pagos">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" placeholder="Ingresa tu ciudad" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nombre">Nombre (opcional):</label>
+                <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+            </div>
+            
+            <div class="form-group">
+                <label for="hora-entrega">Hora de entrega preferida:</label>
+                <select id="hora-entrega">
+                    <option value="">Selecciona una hora</option>
+                    <option value="Mañana (9am-12pm)">Mañana (9am-12pm)</option>
+                    <option value="Tarde (2pm-6pm)">Tarde (2pm-6pm)</option>
+                    <option value="Noche (6pm-9pm)">Noche (6pm-9pm)</option>
+                </select>
+            </div>
+            
+            <div class="botones-modal">
+                <button id="cancelar-pago">Cancelar</button>
+                <button id="confirmar-pago" style="background-color: #009900;">Confirmar Pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 MODAS ALEJANDRA BLOOM. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Variables
+        let carrito = [];
+        let descuentoCiudad = 0;
+        let tieneRegalo = false;
+        const numeroWhatsApp = "59162776863"; // Tu número sin "+"
+        let qrCode = null;
+        let ciudadCliente = "";
+
+        // Elementos del DOM
+        const contadorCarrito = document.getElementById('contador-carrito');
+        const listaCarrito = document.getElementById('lista-carrito');
+        const subtotalElement = document.getElementById('subtotal').querySelector('span');
+        const descuentoCiudadElement = document.getElementById('descuento-ciudad').querySelector('span');
+        const totalElement = document.getElementById('total').querySelector('span');
+        const ofertaRegaloElement = document.getElementById('oferta-regalo');
+        const mensajeRegaloElement = document.getElementById('mensaje-regalo');
+        const btnVaciar = document.getElementById('vaciar-carrito');
+        const btnComprar = document.getElementById('comprar');
+        const modalPago = document.getElementById('modal-pago');
+        const totalModal = document.getElementById('total-modal');
+        const opcionesPago = document.querySelectorAll('.opcion-pago');
+        const btnCancelarPago = document.getElementById('cancelar-pago');
+        const btnConfirmarPago = document.getElementById('confirmar-pago');
+        const qrContainer = document.getElementById('qr-code-container');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const descripcionBtns = document.querySelectorAll('.descripcion-btn');
+        const inputCiudad = document.getElementById('ciudad');
+        let metodoSeleccionado = null;
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarCarrito();
+            actualizarCarrito();
+            
+            // Mostrar/ocultar descripciones
+            descripcionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const descripcion = this.nextElementSibling;
+                    if (descripcion.style.display === 'block') {
+                        descripcion.style.display = 'none';
+                        this.textContent = 'Descripción';
+                    } else {
+                        descripcion.style.display = 'block';
+                        this.textContent = 'Ocultar';
+                    }
+                });
+            });
+        });
+
+        // Tabs
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Carrito
+        document.querySelectorAll('.agregar-carrito').forEach(boton => {
+            boton.addEventListener('click', agregarAlCarrito);
+        });
+
+        btnVaciar.addEventListener('click', vaciarCarrito);
+        btnComprar.addEventListener('click', () => {
+            if (carrito.length === 0) {
+                alert('¡Tu carrito está vacío! Agrega productos antes de comprar.');
+                return;
+            }
+            const total = parseFloat(totalElement.textContent);
+            totalModal.textContent = `Bs. ${total.toFixed(2)}`;
+            
+            // Mostrar QR real en lugar de generarlo
+            document.getElementById('qr-pago').style.display = 'block';
+            
+            modalPago.style.display = 'flex';
+        });
+
+        btnCancelarPago.addEventListener('click', () => {
+            modalPago.style.display = 'none';
+        });
+
+        opcionesPago.forEach(opcion => {
+            opcion.addEventListener('click', () => {
+                opcionesPago.forEach(o => o.classList.remove('activa'));
+                opcion.classList.add('activa');
+                metodoSeleccionado = opcion.dataset.metodo;
+            });
+        });
+
+        btnConfirmarPago.addEventListener('click', () => {
+            const ciudad = inputCiudad.value.trim();
+            if (!ciudad) {
+                alert('Por favor ingresa tu ciudad.');
+                return;
+            }
+            
+            ciudadCliente = ciudad.toLowerCase();
+            aplicarDescuentoPorCiudad();
+            actualizarCarrito();
+            
+            enviarWhatsApp();
+            modalPago.style.display = 'none';
+            vaciarCarrito();
+        });
+
+        modalPago.addEventListener('click', (e) => {
+            if (e.target === modalPago) {
+                modalPago.style.display = 'none';
+            }
+        });
+
+        // Funciones
+        function agregarAlCarrito(e) {
+            const boton = e.target;
+            const producto = boton.closest('.producto');
+            const id = producto.dataset.id;
+            const nombre = producto.dataset.nombre;
+            const precio = parseFloat(producto.dataset.precio);
+            const cantidad = parseInt(producto.querySelector('.input-cantidad').value);
+
+            const productoExistente = carrito.find(item => item.id === id);
+
+            if (productoExistente) {
+                productoExistente.cantidad += cantidad; // Suma las cantidades
+            } else {
+                carrito.push({ id, nombre, precio, cantidad });
+            }
+
+            guardarCarrito();
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            guardarCarrito();
+            actualizarCarrito();
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            descuentoCiudad = 0;
+            tieneRegalo = false;
+            guardarCarrito();
+            actualizarCarrito();
+            mensajeRegaloElement.style.display = 'none';
+        }
+
+        function aplicarDescuentoPorCiudad() {
+            const ciudadesEspeciales = ['oruro', 'cochabamba', 'la paz'];
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            
+            if (ciudadesEspeciales.includes(ciudadCliente)) {
+                // Oruro, Cochabamba o La Paz - Producto sorpresa de regalo por unidad
+                tieneRegalo = true;
+                descuentoCiudad = 0;
+                
+                mensajeRegaloElement.textContent = `¡Felicidades! Por estar en ${ciudadCliente.toUpperCase()}, recibes 1 producto sorpresa de regalo por cada unidad de perfume.`;
+                mensajeRegaloElement.className = 'mensaje-regalo oruro-cocha-paz';
+                mensajeRegaloElement.style.display = 'block';
+            } else {
+                // Otras ciudades - Descuento de 20 Bs por unidad
+                tieneRegalo = false;
+                descuentoCiudad = totalItems * 20;
+                
+                mensajeRegaloElement.textContent = `¡Felicidades! Por estar en ${ciudadCliente.toUpperCase()}, recibes un descuento de Bs. 20 por cada unidad de perfume.`;
+                mensajeRegaloElement.className = 'mensaje-regalo otras-ciudades';
+                mensajeRegaloElement.style.display = 'block';
+            }
+        }
+
+        function actualizarCarrito() {
+            listaCarrito.innerHTML = '';
+            let subtotal = 0;
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+            carrito.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.nombre} x${item.cantidad}</span>
+                    <span>Bs. ${(item.precio * item.cantidad).toFixed(2)}</span>
+                    <button class="eliminar-item" data-id="${item.id}">Eliminar</button>
+                `;
+                listaCarrito.appendChild(li);
+                subtotal += item.precio * item.cantidad;
+            });
+
+            // Mostrar/ocultar oferta de regalo
+            if (tieneRegalo && ciudadCliente) {
+                const ciudadesEspeciales = ['oruro', 'cochabamba', 'la paz'];
+                if (ciudadesEspeciales.includes(ciudadCliente)) {
+                    // Agregar productos sorpresa de regalo (1 por cada unidad)
+                    const totalRegalos = totalItems;
+                    for (let i = 0; i < totalRegalos; i++) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span>PRODUCTO SORPRESA x1 (REGALO)</span>
+                            <span>Bs. 0.00</span>
+                        `;
+                        listaCarrito.appendChild(li);
+                    }
+                    ofertaRegaloElement.textContent = `¡Recibes ${totalRegalos} producto(s) sorpresa de regalo por estar en ${ciudadCliente.toUpperCase()}!`;
+                    ofertaRegaloElement.style.display = 'block';
+                }
+            } else {
+                ofertaRegaloElement.style.display = 'none';
+            }
+
+            subtotalElement.textContent = subtotal.toFixed(2);
+            
+            // Aplicar descuento por ciudad si corresponde
+            descuentoCiudadElement.textContent = descuentoCiudad.toFixed(2);
+            
+            const total = subtotal - descuentoCiudad;
+            totalElement.textContent = total.toFixed(2);
+            
+            contadorCarrito.textContent = totalItems;
+
+            document.querySelectorAll('.eliminar-item').forEach(boton => {
+                boton.addEventListener('click', (e) => {
+                    eliminarDelCarrito(e.target.dataset.id);
+                });
+            });
+        }
+
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
+        function cargarCarrito() {
+            const carritoGuardado = localStorage.getItem('carrito');
+            if (carritoGuardado) {
+                carrito = JSON.parse(carritoGuardado);
+            }
+        }
+
+        function enviarWhatsApp() {
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            const ciudad = document.getElementById('ciudad').value;
+            
+            let mensajeOferta = '';
+            if (['oruro', 'cochabamba', 'la paz'].includes(ciudad.toLowerCase())) {
+                mensajeOferta = `\n🎁 *Oferta especial:* 1 producto sorpresa de regalo por cada unidad de perfume (por estar en ${ciudad.toUpperCase()})`;
+            } else {
+                mensajeOferta = `\n🎁 *Oferta especial:* Descuento de Bs. 20 por cada unidad de perfume (por estar en ${ciudad.toUpperCase()})`;
+            }
+            
+            const mensaje = `🚀 *NUEVO PEDIDO - MODAS ALEJANDRA BLOOM* 🚀\n\n📋 *Productos:*\n${
+                carrito.map(item => `➡ ${item.nombre} x${item.cantidad}: Bs. ${(item.precio * item.cantidad).toFixed(2)}`).join('\n')
+            }${tieneRegalo ? '\n➡ PRODUCTO SORPRESA x' + totalItems + ' (REGALO)' : ''}${mensajeOferta}\n\n💰 *Subtotal:* Bs. ${subtotalElement.textContent}\n🎁 *Descuento por ciudad:* Bs. ${descuentoCiudadElement.textContent}\n💵 *Total:* Bs. ${
+                totalElement.textContent
+            }\n\n📍 *Ciudad de envío:* ${ciudad.toUpperCase()}\n💳 *Método de pago:* ${
+                metodoSeleccionado === 'efectivo' ? 'Efectivo' : 'QR'
+            }\n\n📦 *Dirección de envío:* \n________________________________\n\n¡Gracias por tu compra! 🎉`;
+            
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>
